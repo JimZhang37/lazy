@@ -9,7 +9,8 @@ return {
         exe = "stylua",
         args = { "--config-path", "/Users/yaohua/.config/nvim/stylua.toml" },
       },
-      go = { "goimports" }
+      go = { "goimports" },
+      cpp = { "clang_format" }
 
     },
 

@@ -1,5 +1,8 @@
 return {
   { "hrsh7th/cmp-nvim-lsp" },
+  { "hrsh7th/cmp-cmdline" },
+  { "hrsh7th/cmp-buffer" },
+  { "hrsh7th/cmp-path" },
   {
     "L3MON4D3/LuaSnip",
     version = "v2.*",
@@ -34,7 +37,7 @@ return {
         },
         mapping = cmp.mapping.preset.insert({
           ["<C-b>"] = cmp.mapping.scroll_docs(-4),
-          ["<C-f>"] = cmp.mapping.scroll_docs(4),
+          -- ["<C-f>"] = cmp.mapping.scroll_docs(4), -- because mason can't use language selection
           ["<C-Space>"] = cmp.mapping.complete(),
           ["<C-e>"] = cmp.mapping.abort(),
           ["<CR>"] = cmp.mapping.confirm({
@@ -48,7 +51,10 @@ return {
           { name = "copilot" },
           { name = "nvim_lsp" },
           { name = "luasnip" }, -- For luasnip users.
-          { name = "nvim_lsp_signature_help" }
+          { name = "nvim_lsp_signature_help" },
+          { name = "buffer" },
+          { name = "path" },
+
         },
         completion = { completeopt = "menu,menuone,noinsert, noselect" },
         preselect = { cmp.PreselectMode.Item }, -- the default is the first in the list
@@ -57,6 +63,35 @@ return {
       -- autopairs
       local cmp_autopairs = require("nvim-autopairs.completion.cmp")
       cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
+
+      -- `/` cmdline setup.
+      cmp.setup.cmdline('/', {
+        mapping = cmp.mapping.preset.cmdline(),
+        sources = {
+          { name = 'buffer' }
+        }
+      })
+      -- `/` cmdline setup.
+      cmp.setup.cmdline('?', {
+        mapping = cmp.mapping.preset.cmdline(),
+        sources = {
+          { name = 'buffer' }
+        }
+      })
+      -- `:` cmdline setup.
+      cmp.setup.cmdline(':', {
+        mapping = cmp.mapping.preset.cmdline(),
+        sources = cmp.config.sources({
+          { name = 'path' }
+        }, {
+          {
+            name = 'cmdline',
+            option = {
+              ignore_cmds = { 'Man', '!' }
+            }
+          }
+        })
+      })
     end
   }
 }
