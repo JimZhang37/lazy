@@ -12,7 +12,7 @@ return {
     local opts = {
       inlay_hints = {
         enabled = true,
-        exclude = { "lua", "python" } -- Add filetypes to exclude if needed
+        exclude = { "lua", } -- Add filetypes to exclude if needed
       }
     }
 

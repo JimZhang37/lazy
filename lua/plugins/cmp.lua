@@ -42,7 +42,7 @@ return {
           ["<C-e>"] = cmp.mapping.abort(),
           ["<CR>"] = cmp.mapping.confirm({
             behavior = cmp.ConfirmBehavior.Replace,
-            select = false
+            select = true
           })
         }),
         -- sources = cmp.config.sources({
