@@ -1,4 +1,5 @@
 return {
 
-    "tpope/vim-unimpaired"
+  "tpope/vim-unimpaired",
+  enabled = false
 }

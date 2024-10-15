@@ -80,8 +80,8 @@ return {
       },
       on_attach = on_attach,
     })
-    --TODO: pyright supports inlayhints?
-    lspconfig.pyright.setup {
+    --TODO: pyright or pylsp supports inlayhints?
+    lspconfig.pylsp.setup {
       settings = {
         python = {
           analysis = {
@@ -94,7 +94,16 @@ return {
         },
       },
 
-      on_attach = on_attach,
+      on_attach = function(client, buffer)
+        print("LSP client attached: ", client.name)
+        print("Buffer number: ", buffer)
+        if client.server_capabilities.inlayHintProvider then
+          vim.lsp.inlay_hint.enable(true, { bufnr = buffer })
+          print("Inlay hint enabled")
+        else
+          print("Inlay hint not supported")
+        end
+      end,
     }
 
     -- Autocmd for organizing imports and formatting on save

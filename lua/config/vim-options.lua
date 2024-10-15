@@ -4,6 +4,8 @@ vim.cmd("set softtabstop=2")
 vim.cmd("set tabstop=2")
 vim.cmd("set shiftwidth=2")
 vim.cmd("set number")
+vim.opt.relativenumber = true
+
 vim.cmd("set winbar='%f'")
 
 vim.opt.wrap = false
@@ -48,7 +50,7 @@ vim.api.nvim_set_keymap("t", "<C-h>", "<cmd>wincmd h<cr>", { desc = "Go to Left 
 vim.api.nvim_set_keymap("t", "<C-j>", "<cmd>wincmd j<cr>", { desc = "Go to Lower Window" })
 vim.api.nvim_set_keymap("t", "<C-k>", "<cmd>wincmd k<cr>", { desc = "Go to Upper Window" })
 vim.api.nvim_set_keymap("t", "<C-l>", "<cmd>wincmd l<cr>", { desc = "Go to Right Window" })
-vim.api.nvim_set_keymap("t", "<C-/>", "<cmd>close<cr>", { desc = "Hide Terminal" })
+vim.api.nvim_set_keymap("t", "<C-/>", [[<C-\><C-n>:q<CR>]], { desc = "Hide Terminal" })
 vim.api.nvim_set_keymap("t", "<c-_>", "<cmd>close<cr>", { desc = "which_key_ignore" })
 
 -- quit
@@ -88,10 +90,10 @@ vim.api.nvim_set_keymap("n", "<C-k>", "<C-w>k", { desc = "Go to Upper Window", n
 vim.api.nvim_set_keymap("n", "<C-l>", "<C-w>l", { desc = "Go to Right Window", noremap = true })
 
 -- Resize window using <ctrl> arrow keys
-vim.api.nvim_set_keymap("n", "<C-Up>", "<cmd>resize +2<cr>", { desc = "Increase Window Height" })
-vim.api.nvim_set_keymap("n", "<C-Down>", "<cmd>resize -2<cr>", { desc = "Decrease Window Height" })
-vim.api.nvim_set_keymap("n", "<C-Left>", "<cmd>vertical resize -2<cr>", { desc = "Decrease Window Width" })
-vim.api.nvim_set_keymap("n", "<C-Right>", "<cmd>vertical resize +2<cr>", { desc = "Increase Window Width" })
+vim.api.nvim_set_keymap("n", "<A-Up>", "<cmd>resize +2<cr>", { desc = "Increase Window Height" })
+vim.api.nvim_set_keymap("n", "<A-Down>", "<cmd>resize -2<cr>", { desc = "Decrease Window Height" })
+vim.api.nvim_set_keymap("n", "<A-Left>", "<cmd>vertical resize -2<cr>", { desc = "Decrease Window Width" })
+vim.api.nvim_set_keymap("n", "<A-Right>", "<cmd>vertical resize +2<cr>", { desc = "Increase Window Width" })
 
 
 local floating_terminal_win_id = nil
@@ -141,3 +143,20 @@ vim.api.nvim_set_keymap('n', "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", { de
 vim.api.nvim_set_keymap('n', "gr", "<cmd>Telescope lsp_references<CR>", { desc = "References", })
 vim.api.nvim_set_keymap('n', "gI", "<cmd>lua vim.lsp.buf.implementation()<CR>", { desc = "Goto Implementation" })
 vim.api.nvim_set_keymap('n', "gy", "<cmd>lua vim.lsp.buf.type_definition()<CR>", { desc = "Goto T[y]pe Definition" })
+
+--close scratch buffer
+vim.api.nvim_create_user_command('CloseScratch', function()
+  for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+    if vim.api.nvim_get_option_value('buftype', { buf = buf }) == 'nofile' then
+      -- if vim.api.nvim_buf_get_option(buf, 'buftype') == 'nofile' then     This api has deprecated
+      vim.api.nvim_buf_delete(buf, { force = true })
+    end
+  end
+end, {})
+
+vim.api.nvim_set_keymap('n', '<leader>cc', ':CloseScratch<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>l", "<cmd>Lazy<cr>", { desc = "Lazy" })
+
+-- better indenting
+vim.api.nvim_set_keymap("v", "<", "<gv", {})
+vim.api.nvim_set_keymap("v", ">", ">gv", {})
