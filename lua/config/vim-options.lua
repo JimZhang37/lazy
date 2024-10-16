@@ -44,13 +44,22 @@ vim.api.nvim_set_keymap("n", "<leader><tab>]", "<cmd>tabnext<cr>", { desc = "Nex
 vim.api.nvim_set_keymap("n", "<leader><tab>d", "<cmd>tabclose<cr>", { desc = "Close Tab" })
 vim.api.nvim_set_keymap("n", "<leader><tab>[", "<cmd>tabprevious<cr>", { desc = "Previous Tab" })
 
+--TODO: why rename is not working.
+--TODO: add function to open terminal in a particular directory
+-- floating terminal
+lazyterm = function() require("me.terminal").open() end
+vim.api.nvim_set_keymap("n", "<leader>ft", "<cmd>lua lazyterm()<CR>", { desc = "Terminal (Root Dir)" })
+-- vim.api.nvim_set_keymap("n", "<leader>fT", function() LazyVim.terminal() end, { desc = "Terminal (cwd)" })
+vim.api.nvim_set_keymap("n", "<c-/>", "<cmd>lua lazyterm()<CR>", { desc = "Terminal (Root Dir)" })
+vim.api.nvim_set_keymap("n", "<c-_>", "<cmd>lua lazyterm()<CR>", { desc = "which_key_ignore" })
+
 -- Terminal Mappings
 vim.api.nvim_set_keymap("t", "<esc><esc>", "<c-\\><c-n>", { desc = "Enter Normal Mode" })
 vim.api.nvim_set_keymap("t", "<C-h>", "<cmd>wincmd h<cr>", { desc = "Go to Left Window" })
 vim.api.nvim_set_keymap("t", "<C-j>", "<cmd>wincmd j<cr>", { desc = "Go to Lower Window" })
 vim.api.nvim_set_keymap("t", "<C-k>", "<cmd>wincmd k<cr>", { desc = "Go to Upper Window" })
 vim.api.nvim_set_keymap("t", "<C-l>", "<cmd>wincmd l<cr>", { desc = "Go to Right Window" })
-vim.api.nvim_set_keymap("t", "<C-/>", [[<C-\><C-n>:q<CR>]], { desc = "Hide Terminal" })
+vim.api.nvim_set_keymap("t", "<C-/>", "<cmd>close<cr>", { desc = "Hide Terminal" })
 vim.api.nvim_set_keymap("t", "<c-_>", "<cmd>close<cr>", { desc = "which_key_ignore" })
 
 -- quit
@@ -96,43 +105,6 @@ vim.api.nvim_set_keymap("n", "<A-Left>", "<cmd>vertical resize -2<cr>", { desc =
 vim.api.nvim_set_keymap("n", "<A-Right>", "<cmd>vertical resize +2<cr>", { desc = "Increase Window Width" })
 
 
-local floating_terminal_win_id = nil
-
--- Function to toggle the floating terminal
-function toggle_floating_terminal() -- local
-  if floating_terminal_win_id and vim.api.nvim_win_is_valid(floating_terminal_win_id) then
-    -- Close the floating terminal if it is open
-    vim.api.nvim_win_close(floating_terminal_win_id, true)
-    floating_terminal_win_id = nil
-  else
-    -- Create a new floating window
-    local buf = vim.api.nvim_create_buf(false, true)
-    local width = vim.api.nvim_get_option("columns") -- vim.api.nvim_get_option_value
-    local height = vim.api.nvim_get_option("lines")
-    local win_height = math.ceil(height * 0.8)
-    local win_width = math.ceil(width * 0.8)
-    local row = math.ceil((height - win_height) / 2)
-    local col = math.ceil((width - win_width) / 2)
-
-    local opts = {
-      style = "minimal",
-      relative = "editor",
-      width = win_width,
-      height = win_height,
-      row = row,
-      col = col,
-    }
-
-    floating_terminal_win_id = vim.api.nvim_open_win(buf, true, opts)
-    vim.api.nvim_command("term")
-    vim.api.nvim_command("startinsert")
-  end
-end
-
--- Set a key mapping to toggle the floating terminal
-vim.api.nvim_set_keymap('n', '<leader>tt', ':lua toggle_floating_terminal()<CR>', { noremap = true, silent = true }) --change to <C-/>
-
-
 vim.api.nvim_set_keymap('n', '<A-m>', ':echo "Test Alt Key"<CR>', { noremap = true, silent = true })
 
 
@@ -160,3 +132,29 @@ vim.api.nvim_set_keymap("n", "<leader>l", "<cmd>Lazy<cr>", { desc = "Lazy" })
 -- better indenting
 vim.api.nvim_set_keymap("v", "<", "<gv", {})
 vim.api.nvim_set_keymap("v", ">", ">gv", {})
+
+-- restore q's capability to start macro TODO: doesn't work
+vim.api.nvim_set_keymap('n', 'q', 'q', { noremap = true, silent = true })
+
+
+-- lazygit
+
+lazygit = function() require("me.lazygit").open() end
+vim.api.nvim_set_keymap("n", "<leader>gg", "<cmd>lua lazygit()<CR>", { desc = "Lazygit (Root Dir)" })
+-- vim.api.nvim_set_keymap("n", "<leader>gG", function() LazyVim.lazygit() end, { desc = "Lazygit (cwd)" })
+-- vim.api.nvim_set_keymap("n", "<leader>gb", LazyVim.lazygit.blame_line, { desc = "Git Blame Line" })
+-- vim.api.nvim_set_keymap("n", "<leader>gB", LazyVim.lazygit.browse, { desc = "Git Browse" })
+--
+-- vim.api.nvim_set_keymap("n", "<leader>gf", function()
+--   local git_path = vim.api.nvim_buf_get_name(0)
+--   LazyVim.lazygit({args = { "-f", vim.trim(git_path) }})
+-- end, { desc = "Lazygit Current File History" })
+--
+-- vim.api.nvim_set_keymap("n", "<leader>gl", function()
+--   LazyVim.lazygit({ args = { "log" }, cwd = LazyVim.root.git() })
+-- end, { desc = "Lazygit Log" })
+-- map("n", "<leader>gL", function()
+--   LazyVim.lazygit({ args = { "log" } })
+-- end, { desc = "Lazygit Log (cwd)" })
+--
+--
