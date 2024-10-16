@@ -93,10 +93,11 @@ vim.api.nvim_set_keymap("v", "<A-j>", ":m '>+1<cr>gv=gv", { desc = "Move Down" }
 vim.api.nvim_set_keymap("v", "<A-k>", ":m '<-2<cr>gv=gv", { desc = "Move Up" })
 
 -- Move to window using the <ctrl> hjkl keys
-vim.api.nvim_set_keymap("n", "<C-h>", "<C-w>h", { desc = "Go to Left Window", noremap = true })
-vim.api.nvim_set_keymap("n", "<C-j>", "<C-w>j", { desc = "Go to Lower Window", noremap = true })
-vim.api.nvim_set_keymap("n", "<C-k>", "<C-w>k", { desc = "Go to Upper Window", noremap = true })
-vim.api.nvim_set_keymap("n", "<C-l>", "<C-w>l", { desc = "Go to Right Window", noremap = true })
+-- In order to integrate with tmux, this mapping is replaced by tmux nvim navigator's mapping
+-- vim.api.nvim_set_keymap("n", "<C-h>", "<C-w>h", { desc = "Go to Left Window", noremap = true })
+-- vim.api.nvim_set_keymap("n", "<C-j>", "<C-w>j", { desc = "Go to Lower Window", noremap = true })
+-- vim.api.nvim_set_keymap("n", "<C-k>", "<C-w>k", { desc = "Go to Upper Window", noremap = true })
+-- vim.api.nvim_set_keymap("n", "<C-l>", "<C-w>l", { desc = "Go to Right Window", noremap = true })
 
 -- Resize window using <ctrl> arrow keys
 vim.api.nvim_set_keymap("n", "<A-Up>", "<cmd>resize +2<cr>", { desc = "Increase Window Height" })

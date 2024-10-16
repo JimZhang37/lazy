@@ -34,6 +34,13 @@ return {
           local select = require("CopilotChat.select")
           return select.visual(source) or select.buffer(source)
         end,
+        --original key <c-l> is complict with moving to window to the right
+        mappings = {
+          reset = {
+            normal = '<C-r>',
+            insert = '<C-r>',
+          }
+        }
       }
     end,
     keys = {
