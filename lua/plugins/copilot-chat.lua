@@ -18,7 +18,7 @@ return {
   {
     "CopilotC-Nvim/CopilotChat.nvim",
     branch = "canary",
-    cmd = "CopilotChat",
+    cmd = { "CopilotChat", "CopilotChatMyCustomPrompt" },
     opts = function()
       local user = vim.env.USER or "User"
       user = user:sub(1, 1):upper() .. user:sub(2)
@@ -40,6 +40,15 @@ return {
             normal = '<C-r>',
             insert = '<C-r>',
           }
+        },
+        prompts = {
+          --TODO: Change its name through lsp's rename can't change the name in the
+          MyCustomPrompt = {
+            prompt = 'Explain how it works.',
+            mapping = '<leader>ac',
+            description = 'My custom prompt description',
+            selection = require('CopilotChat.select').visual,
+          },
         }
       }
     end,
@@ -71,6 +80,12 @@ return {
           end
         end,
         desc = "Quick Chat (CopilotChat)",
+        mode = { "n", "v" },
+      },
+      {
+        "<leader>ac",
+        "<cmd>CopilotChatMyCustomPrompt<CR>",
+        desc = "Custom Prompt (CopilotChat)",
         mode = { "n", "v" },
       },
       -- Show help actions with telescope

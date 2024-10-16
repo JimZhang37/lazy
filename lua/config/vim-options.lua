@@ -159,3 +159,6 @@ vim.api.nvim_set_keymap("n", "<leader>gg", "<cmd>lua lazygit()<CR>", { desc = "L
 -- end, { desc = "Lazygit Log (cwd)" })
 --
 --
+
+vim.api.nvim_set_keymap("n", "gco", "o<esc>Vcx<esc><cmd>normal gcc<cr>fxa<bs>", { desc = "Add Comment Below" })
+vim.api.nvim_set_keymap("n", "gcO", "O<esc>Vcx<esc><cmd>normal gcc<cr>fxa<bs>", { desc = "Add Comment Above" })

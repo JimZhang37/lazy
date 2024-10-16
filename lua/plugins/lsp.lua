@@ -17,6 +17,9 @@ return {
     }
 
     local on_attach = function(client, buffer)
+      vim.api.nvim_buf_set_keymap(buffer, 'n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>',
+        { noremap = true, silent = true })
+
       if client.supports_method("textDocument/inlayHint") then
         if
             vim.api.nvim_buf_is_valid(buffer)
@@ -24,6 +27,7 @@ return {
             and not vim.tbl_contains(opts.inlay_hints.exclude, vim.bo[buffer].filetype)
         then
           vim.lsp.inlay_hint.enable(true, { bufnr = buffer })
+          print("Inlay hint enabled")
         end
       end
     end
@@ -94,16 +98,17 @@ return {
         },
       },
 
-      on_attach = function(client, buffer)
-        print("LSP client attached: ", client.name)
-        print("Buffer number: ", buffer)
-        if client.server_capabilities.inlayHintProvider then
-          vim.lsp.inlay_hint.enable(true, { bufnr = buffer })
-          print("Inlay hint enabled")
-        else
-          print("Inlay hint not supported")
-        end
-      end,
+      -- on_attach = function(client, buffer)
+      --   print("LSP client attached: ", client.name)
+      --   print("Buffer number: ", buffer)
+      --   if client.server_capabilities.inlayHintProvider then
+      --     vim.lsp.inlay_hint.enable(true, { bufnr = buffer })
+      --     print("Inlay hint enabled")
+      --   else
+      --     print("Inlay hint not supported")
+      --   end
+      -- end,
+      on_attach = on_attach
     }
 
     -- Autocmd for organizing imports and formatting on save
