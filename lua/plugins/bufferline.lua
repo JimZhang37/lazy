@@ -15,11 +15,11 @@ return {
     { "]b",         "<cmd>BufferLineCycleNext<cr>",            desc = "Next Buffer" },
     { "[B",         "<cmd>BufferLineMovePrev<cr>",             desc = "Move buffer prev" },
     { "]B",         "<cmd>BufferLineMoveNext<cr>",             desc = "Move buffer next" },
+    { "<M-w>",      "<Cmd>bdelete<CR>",                        desc = "Close Current Buffer" }, -- Change to <command-w>
   },
   opts = {
     options = { --options is used inside setup();
       numbers = "ordinal",
-
     }
   }
 }

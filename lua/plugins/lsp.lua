@@ -111,6 +111,7 @@ return {
       on_attach = on_attach
     }
 
+    lspconfig.cmake.setup {}
     -- Autocmd for organizing imports and formatting on save
     vim.api.nvim_create_autocmd("BufWritePre", {
       pattern = "*.go",

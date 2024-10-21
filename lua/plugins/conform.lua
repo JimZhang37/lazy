@@ -10,7 +10,9 @@ return {
         args = { "--config-path", "/Users/yaohua/.config/nvim/stylua.toml" },
       },
       go = { "goimports" },
-      cpp = { "clang_format" }
+      cpp = { "clang_format" },
+      cmake = { "cmake-format" }
+
 
     },
 

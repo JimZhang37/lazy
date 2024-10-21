@@ -42,7 +42,6 @@ return {
           }
         },
         prompts = {
-          --TODO: Change its name through lsp's rename can't change the name in the
           MyCustomPrompt = {
             prompt = 'Explain how it works.',
             mapping = '<leader>ac',

@@ -28,7 +28,7 @@ vim.o.sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,
 --map("n", "<leader>gG", function() LazyVim.lazygit() end, { desc = "Lazygit (cwd)" })
 --map("n", "<leader>gb", LazyVim.lazygit.blame_line, { desc = "Git Blame Line" })
 --map("n", "<leader>gB", LazyVim.lazygit.browse, { desc = "Git Browse" })
-
+-- stylua: ignore start
 -- windows
 vim.api.nvim_set_keymap("n", "<leader>w", "<c-w>", { desc = "Windows", noremap = true })
 vim.api.nvim_set_keymap("n", "<leader>-", "<C-W>s", { desc = "Split Window Below", noremap = true })
@@ -48,7 +48,11 @@ vim.api.nvim_set_keymap("n", "<leader><tab>[", "<cmd>tabprevious<cr>", { desc = 
 --TODO: add function to open terminal in a particular directory
 -- floating terminal
 lazyterm = function() require("me.terminal").open() end
-vim.api.nvim_set_keymap("n", "<leader>ft", "<cmd>lua lazyterm()<CR>", { desc = "Terminal (Root Dir)" })
+-- stylua: ignore start
+vim.api.nvim_set_keymap("n", "<leader>ft",
+  "<cmd>lua require('me.terminal').open(nil, {cwd = vim.fn.expand('%:p:h')})<CR>",
+  { desc = "Terminal (This buffer's directory)" })
+-- stylua: ignore end
 -- vim.api.nvim_set_keymap("n", "<leader>fT", function() LazyVim.terminal() end, { desc = "Terminal (cwd)" })
 vim.api.nvim_set_keymap("n", "<c-/>", "<cmd>lua lazyterm()<CR>", { desc = "Terminal (Root Dir)" })
 vim.api.nvim_set_keymap("n", "<c-_>", "<cmd>lua lazyterm()<CR>", { desc = "which_key_ignore" })
