@@ -1,6 +1,10 @@
 return {
   {
     "folke/zen-mode.nvim",
+    dependencies = {
+
+      "folke/twilight.nvim",
+    },
     keys = {
       {
         "<leader>z",
@@ -35,6 +39,7 @@ return {
   },
   {
     "folke/twilight.nvim",
+    lazy = true,
     opts = {},
   },
 }

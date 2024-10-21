@@ -30,14 +30,15 @@ return {
 
     require('lualine').setup {
       options = {
-        theme = 'auto',
+        theme = 'tokyonight',
       },
       sections = {
         lualine_a = { 'mode' },
         lualine_c = { 'filename' },
         lualine_x = { 'encoding', 'fileformat', 'filetype' },
         lualine_y = { 'progress' },
-        lualine_z = { 'location', macro_recording, lsp_status }
+        -- stylua: ignore
+        lualine_z = { 'location', macro_recording, function() return require('auto-session.lib').current_session_name(true) end }
       },
       inactive_sections = {
         lualine_a = {},

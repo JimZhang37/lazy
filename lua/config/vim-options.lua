@@ -21,7 +21,8 @@ vim.wo.foldcolumn = "1"
 vim.g.mapleader = " "
 
 vim.o.cursorline = true
-
+--auto session requires the sessionoptions
+vim.o.sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"
 -- lazygit
 --map("n", "<leader>gg", function() LazyVim.lazygit( { cwd = LazyVim.root.git() }) end, { desc = "Lazygit (Root Dir)" })
 --map("n", "<leader>gG", function() LazyVim.lazygit() end, { desc = "Lazygit (cwd)" })
@@ -44,7 +45,6 @@ vim.api.nvim_set_keymap("n", "<leader><tab>]", "<cmd>tabnext<cr>", { desc = "Nex
 vim.api.nvim_set_keymap("n", "<leader><tab>d", "<cmd>tabclose<cr>", { desc = "Close Tab" })
 vim.api.nvim_set_keymap("n", "<leader><tab>[", "<cmd>tabprevious<cr>", { desc = "Previous Tab" })
 
---TODO: why rename is not working.
 --TODO: add function to open terminal in a particular directory
 -- floating terminal
 lazyterm = function() require("me.terminal").open() end
